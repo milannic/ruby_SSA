@@ -107,12 +107,12 @@ while true
 			filter = 0
 		end
 		point = point2
-		p track
+		#p track
 	end
-	p "first one"
+	#p "first one"
 	output<<track<<endl
 	output<<track.length<<endl
-	output<<Time.now()-time_start<<endl
+	#output<<Time.now()-time_start<<endl
 	output.flush()
 ###################################################################
 end
