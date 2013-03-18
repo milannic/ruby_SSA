@@ -1,9 +1,8 @@
 #! /usr/bin/ruby
-# usage: ruby filename arg[0] arg[1] arg[2]
+# usage: ruby filename arg[0] arg[1]
 # arg[0] is the filename of the transition matrix whose first line is the total number of states
-# arg[1] is the maximum transitions in per simulation
-# arg[2] is the total times of simulation
-# eg: ruby rand_sort_modified_version.rb test 5000 10 >result 
+# arg[1] is the filename of the output file
+# eg: ruby rand_sort_modified_version.rb test result
 #
 # milannic liu 2013
 
@@ -63,8 +62,6 @@ count = trans.shift.shift
 trans.each{|trans_element|
 		trans_element.delete(0)
 	}
-#total use to record all the traces in this experiment
-total = []
 
 #sort the whole trans_matrix, to make those states who have most next states stands first
 trans.each{|trans_element|
@@ -73,55 +70,50 @@ trans.each{|trans_element|
 	}.reverse!
 }
 
-
+output = File.open(ARGV[1],"a+")
+endl = "\n"
 
 #outside loop, copy every transition matrix to a new temp one to be modified during tranverse
 ###################################################################
-(ARGV[2].to_i).times{
+while true
 	#initialize
-	#use to control the frequency when to recalculate the transition matrix filter = 0
+	#use to control the frequency when to recalculate the transition matrix  
+	filter = 0
 	point = 0
 	point2 = 0
 	track = [0]
 	trans_clone = []
 	trans.each{|trans_element|
 			trans_clone<<trans_element.clone
-		}
+	}
 #inside loop, simulate every transition in the DFA
 ###################################################################
-	(ARGV[1].to_i).times{
 		#when the transition matrix in current state is empty, it means that this simulation has ended
-		unless trans_clone[point].empty?
+	while !trans_clone[point].empty?
 			#get next state
-			track<<point2 = trans_clone[point][get_the_index(trans_clone[point].length)]
+		track<<point2 = trans_clone[point][get_the_index(trans_clone[point].length)]
 			#delete next state in transition matrix in all states
-			trans_clone.each{|trans_element_clone|
-					trans_element_clone.delete(point2)
-				}
+		trans_clone.each{|trans_element_clone|
+				trans_element_clone.delete(point2)
+		}
 			#use to control the frequency of the recalculate the transition matrix 
-			#filter = filter + 1
-			#if filter == 5	
-				trans_clone.each{|trans_element_clone|
-					trans_element_clone.sort!{|a,b|
-					trans_clone[a].count <=> trans_clone[b].count
-					}.reverse!
-				}
-			#		filter = 0
-			#end
-			point = point2
-		else
-		break
+		filter = filter + 1
+		if filter == 5	
+			trans_clone.each{|trans_element_clone|
+				trans_element_clone.sort!{|a,b|
+				trans_clone[a].count <=> trans_clone[b].count
+				}.reverse!
+			}
+			filter = 0
 		end
-	}
+		point = point2
+		p track
+	end
+	p "first one"
+	output<<track<<endl
+	output<<track.length<<endl
+	output<<Time.now()-time_start<<endl
+	output.flush()
 ###################################################################
-	total << track
-}
-
-total.sort!{|a,b|
-	a.length <=> b.length
-}.reverse!.each{|ele|
-	p ele
-	p ele.length
-}
-
-p time_end = Time.now()-time_start
+end
+output.close
