@@ -37,7 +37,7 @@ end
 
 
 
-p time_start = Time.now()
+time_start = Time.now()
 #calculate the basic information of this DFA to know which state has the most transitions to different states 
 trans = []
 max_hop = 0
