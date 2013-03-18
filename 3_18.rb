@@ -1,8 +1,9 @@
 #! /usr/bin/ruby
-# usage: ruby filename arg[0] arg[1]
+# usage: ruby filename arg[0] arg[1] arg[2]
 # arg[0] is the filename of the transition matrix whose first line is the total number of states
 # arg[1] is the filename of the output file
-# eg: ruby rand_sort_modified_version.rb test result
+# arg[2] is the filename of the record file, this file is used to record the deepest trace
+# eg: ruby rand_sort_modified_version.rb test result record
 #
 # milannic liu 2013
 
@@ -39,6 +40,13 @@ end
 
 time_start = Time.now()
 #calculate the basic information of this DFA to know which state has the most transitions to different states 
+if File.exist?(ARGV[2])
+	record = File.open(ARGV[2],'r+')
+	deepest_track_length = record.gets.chop.to_i
+	record.close
+else
+	deepest_track_length = 0
+end
 trans = []
 max_hop = 0
 max_find = []
@@ -112,6 +120,13 @@ while true
 	#p "first one"
 	output<<track<<endl
 	output<<track.length<<endl
+	if track.length > deepest_track_length
+		deepest_track_length = track.length
+		new_record = File.open(ARGV[2],'w+')
+		new_record<<track.length<<endl
+		new_record<<track<<endl
+		new_record.close
+	end
 	#output<<Time.now()-time_start<<endl
 	output.flush()
 ###################################################################
