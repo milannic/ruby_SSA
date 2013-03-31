@@ -1,3 +1,3 @@
 #! /bin/bash	 
 
-ruby 3_18.rb test ../result ../record & ruby 3_18.rb test ../result2 ../record2 & 
+ruby state_trace_gen.rb bro217_trans_matrix bro217_end_state ../result 1000000 & ruby state_trace_gen.rb bro217_trans_matrix bro217_end_state ../result2 1000000 & 
