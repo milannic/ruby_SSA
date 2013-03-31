@@ -1,0 +1,144 @@
+desc: I1 cache:         32768 B, 64 B, 8-way associative
+desc: D1 cache:         32768 B, 64 B, 8-way associative
+desc: LL cache:         3145728 B, 64 B, 12-way associative
+cmd: ./run_Classic_Dfa test output
+events: Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw 
+fl=/home/milannic/development/tsinghua/ruby_SSA/run_Classic_Dfa/main.c
+fn=main
+7 4 0 0 0 0 0 1 0 0
+8 1 0 0 0 0 0 1 0 0
+9 1 0 0 0 0 0 1 0 0
+13 2 1 1 1 0 0 0 0 0
+18 10 1 1 3 0 0 4 1 0
+24 7 0 0 1 0 0 4 0 0
+26 26137 2 2 19601 0 0 1 0 0
+28 26132 0 0 6533 0 0 6533 0 0
+29 13066 0 0 6533 0 0 6533 409 409
+30 5043476 1 1 3351429 0 0 6533 0 0
+32 11707136 0 0 1672448 0 0 6689792 0 0
+33 8362240 0 0 5017344 0 0 1672448 104529 104529
+43 32665 0 0 6533 0 0 19599 0 0
+46 3 0 0 1 0 0 2 0 0
+47 10 1 1 3 2 2 4 0 0
+52 2026 1 1 405 0 0 810 0 0
+55 1616 0 0 404 0 0 1212 0 0
+56 2828 0 0 1212 404 403 404 0 0
+58 3 0 0 1 0 0 2 0 0
+59 1 0 0 0 0 0 0 0 0
+60 2 0 0 2 0 0 0 0 0
+fl=???
+fn=(below main)
+0 63 5 5 19 2 0 25 0 0
+fn=???
+0 287692750 718 713 111897264 1153 982 32807334 178 160
+fn=_Exit
+0 3 1 1 2 0 0 1 0 0
+fn=_IO_default_finish
+0 42 2 2 14 0 0 10 0 0
+fn=_IO_default_uflow
+0 23658 2 2 11826 0 0 5913 0 0
+fn=_IO_doallocbuf
+0 42 2 2 18 0 0 10 1 0
+fn=_IO_file_close
+0 8 1 1 4 0 0 2 0 0
+fn=_IO_file_close_it
+0 110 4 4 26 1 1 52 0 0
+fn=_IO_file_doallocate
+0 110 5 5 24 2 0 40 1 0
+fn=_IO_file_finish
+0 30 2 2 10 0 0 12 0 0
+fn=_IO_file_fopen
+0 164 6 6 34 1 1 42 0 0
+fn=_IO_file_init
+0 32 2 2 10 0 0 16 0 0
+fn=_IO_file_open
+0 90 4 4 26 0 0 26 0 0
+fn=_IO_file_read
+0 14790 2 2 7395 0 0 4437 0 0
+fn=_IO_file_stat
+0 20 3 3 8 0 0 8 1 0
+fn=_IO_file_underflow
+0 78386 6 6 29572 1 0 25147 2 1
+fn=_IO_link_in
+0 208 9 9 76 3 2 48 0 0
+fn=_IO_setb
+0 104 2 2 40 0 0 26 0 0
+fn=_IO_sputbackc
+0 90429804 2 2 40191024 0 0 10047756 0 0
+fn=_IO_switch_to_get_mode
+0 32538 2 2 11832 0 0 8874 0 0
+fn=_IO_un_link
+0 244 8 8 92 2 2 54 0 0
+fn=_IO_unsave_markers
+0 28 1 1 10 0 0 4 0 0
+fn=_IO_vfscanf
+0 845570837 65 65 291353392 96 71 151508762 1 0
+fn=__ctype_init
+0 25 2 2 13 1 0 6 0 0
+fn=__cxa_atexit
+0 16 2 2 5 0 0 7 0 0
+fn=__cxa_finalize
+0 45 5 5 11 1 1 6 0 0
+fn=__default_morecore
+0 18 2 2 4 0 0 4 0 0
+fn=__fxstat64
+0 26 3 3 10 0 0 6 0 0
+fn=__isoc99_fscanf
+0 87307064 4 4 35258622 0 0 20147784 0 0
+fn=__libc_csu_init
+0 21 1 1 6 0 0 6 0 0
+fn=__libc_memalign
+0 630 4 4 159 0 0 150 4 4
+fn=__strtol_internal
+0 33448980 2 2 15052041 0 0 13379592 0 0
+fn=__uflow
+0 63595 5 5 25143 1 0 7396 1 1
+fn=_dl_addr
+0 67632 11 11 26568 754 605 2372 1 0
+fn=_dl_allocate_tls_init
+0 89 7 7 33 1 0 23 1 0
+fn=_dl_debug_state
+0 2 1 1 2 0 0 0 0 0
+fn=_setjmp
+0 16 1 1 5 0 0 7 0 0
+fn=brk
+0 42 2 2 12 0 0 10 0 0
+fn=bsearch
+0 3492 2 2 964 0 0 927 0 0
+fn=calloc
+0 168 2 2 48 0 0 48 1 1
+fn=close
+0 16 1 1 6 0 0 2 0 0
+fn=exit
+0 10 2 2 1 0 0 6 0 0
+fn=fclose
+0 174 7 7 60 2 1 36 0 0
+fn=feof
+0 18630 3 3 6480 0 0 2835 0 0
+fn=fopen
+0 26 1 1 8 0 0 12 0 0
+fn=free
+0 44 2 2 10 2 2 6 0 0
+fn=getc
+0 19394 3 3 8482 1 1 3234 0 0
+fn=malloc
+0 317 5 5 95 6 3 110 3 3
+fn=memrchr
+0 12 2 2 5 0 0 2 0 0
+fn=mmap
+0 46 2 2 24 0 0 10 0 0
+fn=munmap
+0 18 1 1 8 0 0 2 0 0
+fn=open
+0 24 1 1 14 0 0 4 0 0
+fn=read
+0 17748 1 1 10353 0 0 2958 0 0
+fn=sbrk
+0 60 3 3 18 1 0 14 1 0
+fn=strncasecmp
+0 13 2 2 5 0 0 2 0 0
+fn=strnlen
+0 12 2 2 4 1 1 3 0 0
+fn=wcslen
+0 11 2 2 4 0 0 2 0 0
+summary: 1370009843 957 952 503974395 2438 2078 236360065 105135 105108
