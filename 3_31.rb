@@ -85,7 +85,7 @@ while true
 		point2 = trans_clone[point][index]
 		while point2 == point
 			index = (rand_factor*rand()*trans_clone[point].length).floor
-			p index
+			#p index
 			point2 = trans_clone[point][index]
 		end
 		trans_clone[point].delete_at(index)
@@ -95,3 +95,4 @@ while true
 	}
 	output<<endl
 end
+output.close
