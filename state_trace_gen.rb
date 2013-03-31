@@ -73,7 +73,9 @@ while true
 		}
 
 		if trans_clone[point2].empty?
+			#p "this is the index #{point2}"
 			trans_clone[point2] = trans[point2].clone
+			#p trans_clone[point2]
 		end
 
 		output<<','<<point2
