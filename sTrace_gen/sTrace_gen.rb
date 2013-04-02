@@ -6,11 +6,12 @@
 # -l number    #the limit of the length of the trace
 # -r number    #the repeat times of each state_sequence
 # -c number    #the total number of the traces
+# -a           # open the mode of accepted states
 # milannic liu 2013
 
 
 selected_traces = []
-required_length = 10 
+required_length = 500 
 total_number =	100 
 repeated_times = 1 
 count_number = 0
@@ -19,6 +20,7 @@ endl = '\n'
 output_directory = "../../output_link/sTrace/"
 trans_matrix_file = "../resource/bro217_trans_matrix"
 otrace_file = "../../output_link/oTrace/current"
+timestamp = Time.new.strftime("%Y-%m-%d-%H-%M")
 
 if (arg_index = ARGV.index("-l")) != nil
 	if	(ARGV[arg_index+1] =~ /^\d+$/) != nil
@@ -59,7 +61,16 @@ if (arg_index = ARGV.index("-p")) != nil
 	end
 end
 
+if (arg_index = ARGV.index("-a")) != nil
+	output_directory += 'accepted_states/'
+	otrace_file += '_accepted_states/'
+end
 
+output_directory += timestamp
+
+if(!File.exist?(output_directory))
+	Dir.mkdir(output_directory)
+end
 
 if File.exist?(otrace_file)
 	record = File.open(otrace_file,'r+')
@@ -83,7 +94,7 @@ if File.exist?(otrace_file)
 else
 	exit
 end
-
+p selected_traces.length
 #test code
 =begin
 selected_traces.each_with_index{|ele_array,index|
@@ -113,7 +124,7 @@ string_per_line = ""
 count = 0
 selected_traces.each{|state_array_ele|
 	repeated_times.times{|times_index|
-		output_file = File.open("#{output_directory}#{count}_#{times_index}_#{state_array_ele.length}",'w+')
+		output_file = File.open("#{output_directory}/#{state_array_ele.length}_#{count}_#{times_index}",'w+')
 		count += 1
 		state_array_ele.each_with_index{|ele,index_ele|
 			if index_ele != state_array_ele.length-1
