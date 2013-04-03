@@ -50,7 +50,7 @@ random_change = Proc.new{|string_original|
 }
 
 endl = '\n'
-repeated_times = 100
+repeated_times = 10000
 disturb_factor = 0.01
 
 mix_flag = 1
@@ -142,6 +142,18 @@ end
 
 
 output_directory += timestamp
+
+if delete_flag == 1
+	output_directory += '_d'
+elsif swap_flag == 1
+	output_directory += '_s'
+elsif change_flag == 1
+	output_directory += '_c'
+else
+	output_directory += '_m'
+end
+
+output_directory += "_#{disturb_factor}"
 
 if(!File.exist?(output_directory))
 	Dir.mkdir(output_directory)
