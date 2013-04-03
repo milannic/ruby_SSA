@@ -105,7 +105,7 @@ if (mix_flag+delete_flag+swap_flag+change_flag) == 0
 	change_flag = 1
 end
 =end
-p ARGV
+#p ARGV
 if (arg_index = ARGV.index("-f")) != nil
 	if	(ARGV[arg_index+1] =~ /^\d+(\.\d+)?$/) != nil
 		disturb_factor = ARGV[arg_index+1].to_i
@@ -153,7 +153,7 @@ else
 	output_directory += '_m'
 end
 
-output_directory += "_#{disturb_factor}"
+output_directory += "_#{disturb_factor.to_s[0..3]}"
 
 if(!File.exist?(output_directory))
 	Dir.mkdir(output_directory)
