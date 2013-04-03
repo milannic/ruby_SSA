@@ -6,7 +6,7 @@ int transfer_Matrix[MAXSTATE][256];
 int main(int argc,char** argv)
 {
 	int state_Number,for_loop_variable,for_loop_255_variable,temp_int,current_state = 0;
-	int* temp_ending_flag = NULL;
+	//int* temp_ending_flag = NULL;
 	unsigned char trans_char;
 	FILE* input_transfer_file;
 	FILE* input_string_file;
@@ -25,8 +25,8 @@ int main(int argc,char** argv)
 	//printf("%d\n",state_Number);
 	for(for_loop_variable=0;for_loop_variable<state_Number;for_loop_variable++)
 	{
-		temp_ending_flag = &transfer_is_ending_state[for_loop_variable];
-		*temp_ending_flag = 1;
+		//temp_ending_flag = &transfer_is_ending_state[for_loop_variable];
+		//*temp_ending_flag = 1;
 		for(for_loop_255_variable=0;for_loop_255_variable<256;for_loop_255_variable++)
 		{
 			fscanf(input_transfer_file,"%d\t",&temp_int);

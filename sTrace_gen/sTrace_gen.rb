@@ -124,7 +124,7 @@ string_per_line = ""
 count = 0
 selected_traces.each{|state_array_ele|
 	repeated_times.times{|times_index|
-		output_file = File.open("#{output_directory}/#{state_array_ele.length}_#{count}_#{times_index}",'w+')
+		output_file = File.open("#{output_directory}/#{state_array_ele.length}_#{count}_#{times_index}","w+:ASCII-8BIT")
 		count += 1
 		state_array_ele.each_with_index{|ele,index_ele|
 			if index_ele != state_array_ele.length-1

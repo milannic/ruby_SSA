@@ -93,7 +93,7 @@ trans.each{|trans_element|
 	}.reverse!
 }
 
-output = File.open(output_file,"w+")
+output = File.open(output_file,"w+:ASCII-8BIT")
 endl = "\n"
 rand_factor = 0.2
 
