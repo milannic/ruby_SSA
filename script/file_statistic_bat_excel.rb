@@ -65,9 +65,11 @@ timestamp = Time.new.strftime("%Y-%m-%d-%H-%M")
 dirp.each do |file|
 	if File.directory?(file)
 		if File.exist?("#{expand_path}/#{file}/result")
+			p file
 			statistic_file = File.new("#{output_file}_#{timestamp}",'w+')
 			statistic_file<<"#{file}\n"
-			worksheet.write(count,1,"#{file}")
+			count += 1
+			worksheet1.write(count,0,"#{file}")
 			count += 1
 			dirp_2 = Dir.open("#{expand_path}/#{file}/result")	
 			dirp_2.each do |inner_file|
@@ -79,19 +81,21 @@ dirp.each do |file|
 							line.delete!("\s")
 							d1_misses = line[line.index(':')+1..line.index('(')-1].delete!(',').to_i
 							statistic_file<<d1_misses<<":"
-							worksheet1.write(count,0,d1_misses.to_s)
+							worksheet1.write(count,0,d1_misses)
 						end
 
 						if line.chop! =~ /LLd\s+misses:/
 							line.delete!("\s")
 							lld_misses = line[line.index(':')+1..line.index('(')-1].delete!(',').to_i
 							statistic_file<<lld_misses<<endl
-							worksheet1.write(count,1,lld_misses.to_s)
+							worksheet1.write(count,1,lld_misses)
 							break
 						end
 					end
 					innner_file_open.close
 				end
+			end
+			count += 1
 			statistic_file.close
 
 			#input file
@@ -121,46 +125,53 @@ dirp.each do |file|
 				count_input += 1
 				if count_input%5 == 0
 					all_array_5_mean<<mean(per_array_5)
-					worksheet2.write(count_5,0,mean(per_array_5).to_s)
-					worksheet2.write(count_5,1,variance(per_array_5).to_s)
+					worksheet2.write(count_5,0,mean(per_array_5))
+					worksheet2.write(count_5,1,variance(per_array_5))
 					count_5 += 1
 					per_array_5 = []
 				end
 
 				if count_input%25 == 0
 					all_array_25_mean<<mean(per_array_25)
-					worksheet3.write(count_25,0,mean(per_array_25).to_s)
-					worksheet3.write(count_25,1,variance(per_array_25).to_s)
+					worksheet3.write(count_25,0,mean(per_array_25))
+					worksheet3.write(count_25,1,variance(per_array_25))
 					count_25 += 1
 					per_array_25 = []
 				end
 					
 				if count_input%100 == 0
 					all_array_100_mean<<mean(per_array_100)
-					worksheet4.write(count_100,0,mean(per_array_100).to_s)
-					worksheet4.write(count_100,1,variance(per_array_100).to_s)
+					worksheet4.write(count_100,0,mean(per_array_100))
+					worksheet4.write(count_100,1,variance(per_array_100))
 					count_100 += 1
 					per_array_100 = []
 				end
 			end
-			
+				
+			p all_array_5_mean 
+			p all_array_25_mean
+			p all_array_100_mean
+
 			worksheet5.write(count_all,0,"5")
-			worksheet5.write(count_all,1,mean(all_array_5_mean).to_s)
-			worksheet5.write(count_all,2,variance(all_array_5_mean).to_s)
+			worksheet5.write(count_all,1,mean(all_array_5_mean))
+			worksheet5.write(count_all,2,variance(all_array_5_mean))
 			count_all += 1
 
 			worksheet5.write(count_all,0,"25")
-			worksheet5.write(count_all,1,mean(all_array_25_mean).to_s)
-			worksheet5.write(count_all,2,variance(all_array_25_mean).to_s)
+			worksheet5.write(count_all,1,mean(all_array_25_mean))
+			worksheet5.write(count_all,2,variance(all_array_25_mean))
 			count_all += 1
 
 			worksheet5.write(count_all,0,"100")
-			worksheet5.write(count_all,1,mean(all_array_100_mean).to_s)
-			worksheet5.write(count_all,2,variance(all_array_100_mean).to_s)
+			worksheet5.write(count_all,1,mean(all_array_100_mean))
+			worksheet5.write(count_all,2,variance(all_array_100_mean))
 			count_all += 1
-
+			
+			all_array_5_mean = []
+			all_array_25_mean = []
+			all_array_100_mean = []
+			
 			excel_input.close()
-			end
 		end
 	end	
 end
