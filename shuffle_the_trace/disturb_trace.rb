@@ -44,13 +44,14 @@ random_change = Proc.new{|string_original|
 		return ""
 	end
 	position = (rand()*string_original.length).floor
-	range_factor = (rand()*8).floor
-	string_original[position] = (string_original[position].ord^(1<<range_factor)).chr
+	range_factor = (rand()*255).floor
+	#string_original[position] = (string_original[position].ord^(1<<range_factor)).chr
+        string_original[position] = range_factor.chr
 	string_original
 }
 
 endl = '\n'
-repeated_times = 10000
+repeated_times = 2000
 disturb_factor = 0.01
 
 mix_flag = 1
