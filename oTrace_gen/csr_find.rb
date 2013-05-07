@@ -3,6 +3,128 @@
 # -o filename     the output file
 # -l number       the total length of a certain trace
 # milannic liu 2013
+# delinate the structure of a dfa state
+# every dfa state is a array whose first element(with the identifer 0) is the current state number while the rest elements are the segments current trace have matched previously
+# state[ele0,ele1,ele2]
+
+
+
+
+def get_max(value_table)
+	copy_table = []
+	value_table.each do |value|
+		copy_table<<value.clone
+	end
+	copy_table.sort!{|value1,value2|
+		value1[1] <==> value2[1]
+	}.reverse!
+	return copy_table[0][0]
+end
+
+def cal_value(trans_matrix,match_matrix,dfa_record,dfa_trace,rule_table,value_table)
+	(0..255).each do |ascii_code|
+		temp_value = 0
+		new_state = [[],[],[]]
+		new_activate_state = [[],[],[]]
+		new_dfa_0_reg = []
+		dfa_record.each_with_index do |single_dfa,dfa_index|
+			single_dfa.each do |single_state|
+				next_state = trans_matrix[dfa_index][single_state[0]][ascii_code]
+				if match_matrix[dfa_index][next_state][0] == 1  #dead state
+					temp_value -= 10
+				else 
+					if dfa_trace[dfa_index].include?(next_state) == false
+						if new_state[dfa_index].include?(next_state) ==false
+							new_state[dfa_index] << next_state
+							temp_value += 3 
+						end
+					end
+					match_matrix[dfa_index][next_state][1..match_matrix[dfa_index][next_state].length()-1].each do |reg_num|
+						if single_state[1..single_state.length()-1].include?(tsi_matrix[reg_num-1][0]) == true
+							if tsi_matrix[reg_num-1][2] == 0
+								if rule_table[reg_num-1] == 0 
+									if new_dfa_0_reg.include?(reg_num) == false
+										if tsi_matrix[reg_num-1][1] == 0
+											new_dfa_0_reg << reg_num
+										end
+										if new_activate_state[tsi_matrix[reg_num-1][1]].length() == 0
+											temp_value += 10
+											new_activate_state[tsi_matrix[reg_num-1][1]] << tsi_matrix[reg_num-1][0]
+										elsif new_activate_state[tsi_matrix[reg_num-1][1]].include?(tsi_matrix[reg_num-1][0]) == false
+											temp_value += 1
+											new_activate_state[tsi_matrix[reg_num-1][1]] << tsi_matrix[reg_num-1][0]
+										end
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+		value_table[ascii_code] = (temp_value*((0.8)*rand())).ceil
+	end
+end
+
+
+def get_next(trans_matrix,match_matrix,dfa_record,dfa_trace,rule_table,tempchar)
+	new_activate_state = [[],[],[]]
+	availble_state = [[],[],[]]
+	hash_table = [Hash.new([]),Hash.new([]),Hash.new([])]
+	dfa_record.each_with_index do |single_dfa,dfa_index|
+		single_dfa.each do |single_state|
+			single_state[0] = trans_matrix[dfa_index][single_state[0]][tempchar]
+			dfa_trace[dfa_index] << single_state[0]
+			if match_matrix[dfa_index][single_state[0]][0] == 1 # dead state
+				single_state[0] = -1
+			else
+				match_matrix[dfa_index][single_state][1..matched[dfa_index][single_state].length()-1].each do |reg_num|
+					single_state << reg_num
+					if tsi_matrix[reg_num-1][2] == 0 # a middle segment
+						if single_state[1..single_state.length()-1].include?(tsi_matrix[reg_num-1][0]) == true #previous matched segment found
+							if rule_table[reg_num-1] == 0  # rule_table is still available
+								new_activate_state[tsi_matrix[reg_num-1][1]]<< reg_num
+								if tsi_matrix[reg_num-1][0] == 0
+									rule_table[reg_num-1] = 1
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	dfa_record.each_with_index do |single_dfa,dfa_index|
+		single_dfa.each do |single_state|
+			if single_state[0] != -1 # not a dead state
+				availble_state[dfa_index] << single_state[0]
+				single_state[1..single_state.length()-1].each do |ele|
+					hash_table[dfa_index][single_state[0]] << ele
+				end
+			end
+		end
+	end
+	new_activate_state.each_with_index do |single_dfa,dfa_index|
+		availble_state[dfa_index] << 0
+		single_dfa.each do |ele|
+			hash_table[dfa_index][0] << ele
+		end
+	end
+	dfa_record.each_with_index do |single_dfa,dfa_index| 
+		dfa_record[dfa_index] = []
+		availble_state[dfa_index].uniq.each do |ele|
+			array = [ele]
+			hash_table[dfa_index][ele].uniq.each do |pre_seg|
+				array << pre_seg
+			end
+			dfa_record[dfa_index] << array
+		end
+	end
+	dfa_trace.each do |ele|
+		ele.uniq!
+	end
+end
+
 
 
 timestamp = Time.new.strftime("%Y-%m-%d-%H-%M")
@@ -12,12 +134,9 @@ trans_matrix_file_3 = "../resource/DFA3_TRANS.data"
 match_matrix_file_1 = "../resource/DFA1_MATCH.data"
 match_matrix_file_2 = "../resource/DFA2_MATCH.data"
 match_matrix_file_3 = "../resource/DFA3_MATCH.data"
-dfa0_state_total = 0
-dfa1_state_total = 0
-dfa2_state_total = 0
 tsi_file = "../resource/TSI.data"
 output_file = "../../output_link/oTrace/#{timestamp}"
-string_len = 800
+string_len = 2000
 reg_total = 0
 
 
@@ -36,33 +155,24 @@ if (arg_index = ARGV.index("-o")) != nil
 	end
 end
 
-trans_matrix_0 = []
-trans_matrix_1 = []
-trans_matrix_2 = []
-
-
-match_matrix_0 = []
-match_matrix_1 = []
-match_matrix_2 = []
-
+dfa_state_total = [] 
+trans_matrix = [[],[],[]]
+match_matrix = [[],[],[]]
 tsi_matrix = []
-
 value_table = []
 (0..255).each{|index|
 	value_table << [index,0]
 }
 
-
-
 file1 = File.new(trans_matrix_file_1,'r+') 
-dfa0_state_total = file1.gets.chop!.to_i
+dfa_state_total << file1.gets.chop!.to_i
 
 while line = file1.gets
 	words = line.split("\s")
 	words.map! do |word|
 		word.to_i
 	end
-	trans_matrix_0<<words
+	trans_matrix[0]<<words
 end
 
 file1.close
@@ -70,28 +180,28 @@ file1.close
 
 
 file2 = File.new(trans_matrix_file_2,'r+') 
-dfa1_state_total = file2.gets.chop!.to_i
+dfa_state_total << file2.gets.chop!.to_i
 
 while line = file2.gets
 	words = line.split("\s")
 	words.map! do |word|
 		word.to_i
 	end
-	trans_matrix_1<<words
+	trans_matrix[1]<<words
 end
 
 file2.close
 
 
 file3 = File.new(trans_matrix_file_3,'r+') 
-dfa2_state_total = file3.gets.chop!.to_i
+dfa_state_total << file3.gets.chop!.to_i
 
 while line = file3.gets
 	words = line.split("\s")
 	words.map! do |word|
 		word.to_i
 	end
-	trans_matrix_2<<words
+	trans_matrix[2]<<words
 end
 
 file3.close
@@ -106,7 +216,7 @@ while line = file4.gets
 	words.map! do |word|
 		word.to_i
 	end
-	match_matrix_0<<words
+	match_matrix[0]<<words
 end
 
 file4.close
@@ -121,7 +231,7 @@ while line = file5.gets
 	words.map! do |word|
 		word.to_i
 	end
-	match_matrix_1<<words
+	match_matrix[1]<<words
 end
 file5.close
 
@@ -135,7 +245,7 @@ while line = file6.gets
 	words.map! do |word|
 		word.to_i
 	end
-	match_matrix_2<<words
+	match_matrix[2]<<words
 end
 
 file6.close
@@ -161,128 +271,21 @@ reg_total.times{
 # the regex number in the file starts with 1 while those in array starts with 0
 count = 0
 
-def cal_value()
-	(0..255).times do |index|	
-		temp_value = 0
-		temp_next_state = 0
-		
-		
-		if dfa0_trace.length() != 0	
-			dfa0_trace.each do |state|
-				temp_next_state = trans_matrix_0[state[0]][index]	
-				if match_matrix_0[temp_next_state][0] == 1 #dead_state
-					temp_value -= 10
-				else
-					match_matrix_0[temp_next_state][1..match_matrix_0[temp_next_state].length-1].each do |new_state|
-						if (state[1..state.length-1].index(tsi_matrix[new_state-1][0]) != nil)  && (tsi_matrix[new_state-1][2] == 0) # activate a new state 0.former record 1. not a final state
-							if tsi_matrix[new_state-1][1] != 0
-								temp_value += 7
-							else
-								if rule_table[new_state-1] != 1 
-									temp_value += 7
-								end
-							end
-						end
-					end
-					if dfa0_record.index(temp_next_state) == nil
-						temp_value += 5
-					end
-				end
-			end
-		end
-
-
-
-		if dfa1_trace.length() != 0	
-			dfa1_trace.each do |state|
-				temp_next_state = trans_matrix_1[state[0]][index]	
-				if match_matrix_1[temp_next_state][0] == 1 #dead_state
-					temp_value -= 10
-				else
-					match_matrix_1[temp_next_state][1..match_matrix_1[temp_next_state].length-1].each do |new_state|
-						if (state[1..state.length-1].index(tsi_matrix[new_state-1][0]) != nil)  && (tsi_matrix[new_state-1][2] == 0) # activate a new state 0.former record 2. not a final state
-							if tsi_matrix[new_state-1][1] != 0
-								temp_value += 7
-							else
-								if rule_table[new_state-1] != 1 
-									temp_value += 7
-								end
-							end
-						end
-					end
-					if dfa1_record.index(temp_next_state) == nil
-						temp_value += 5
-					end
-				end
-			end
-		end
-
-
-		if dfa2_trace.length() != 0	
-			dfa2_trace.each do |state|
-				temp_next_state = trans_matrix_2[state[0]][index]	
-				if match_matrix_2[temp_next_state][0] == 1 #dead_state
-					temp_value -= 10
-				else
-					match_matrix_2[temp_next_state][1..match_matrix_2[temp_next_state].length-1].each do |new_state|
-						if (state[1..state.length-1].index(tsi_matrix[new_state-1][0]) != nil)  && (tsi_matrix[new_state-1][2] == 0) # activate a new state 0.former record 2. not a final state
-							if tsi_matrix[new_state-1][1] != 0
-								temp_value += 7
-							else
-								if rule_table[new_state-1] != 1 
-									temp_value += 7
-								end
-							end
-
-						end
-					end
-					if dfa2_record.index(temp_next_state) == nil
-						temp_value += 5
-					end
-				end
-			end
-		end
-		value_table[index][1] = (temp_value*(rand()*0.2+0.8)).ceil
-	end
-end
-
-def get_the_max()
-	copy_value_table = []
-	value_table.each do |ele|
-		copy_value_table<<value_table.clone
-	end
-	copy_value_table.sort!{|a,b|
-		a[1] <==> b[1]
-	}.reverse!
-	copy_value_table[0][0]
-end
-
-def get_the_next(char_c)
-	new_state_dfa0 = []
-	new_state_dfa1 = []
-	new_state_dfa2 = []
-	
-
-
-		
-end
-
-
 
 while true
 	output_file_variable= File.new("#{output_file}_#{count}","w+:ASCII-8BIT")
-	dfa0_record = []
-	dfa1_record = []
-	dfa2_record = []
-
-	dfa0_trace = [[0]]
-	dfa1_trace = []
-	dfa2_trace = []
-
-	ascii_trace = []
+	dfa_record = [[],[],[]]  # record current state sequence of the DFA
+	dfa_trace = [[],[],[]]   # record every visited state for each DFA
+	ascii_trace = ""         # record the ascii trace that need to be written in the file
+	tempchar = 0
+	rule_table.map!{|a| a=0 }
 
 	string_len.times do |index|
-
+		cal_value(trans_matrix,match_matrix,dfa_record,dfa_trace,rule_table,value_table)
+		p value_table
+		tempchar = get_max(value_table)
+		ascii_trace << tempchar.chr
+		get_next(trans_matrix,match_matrix,dfa_record,dfa_trace,rule_table,tempchar)
 	end
 	output_file_variable<<ascii_trace
 	output_file.close()
