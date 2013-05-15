@@ -2,6 +2,7 @@
 # usage: ruby script [option argu]
 # -o filename     the output file
 # -l number       the total length of a certain trace
+# -t tracefile    the previous tracefile
 # milannic liu 2013
 # delinate the structure of a dfa state
 # every dfa state is a array whose first element(with the identifer 0) is the current state number while the rest elements are the segments current trace have matched previously
@@ -399,6 +400,12 @@ weight_table.each_with_index do |single_weight_table,index|
 	end
 end
 
+
+
+
+
+
+
 # remember -1 
 # the regex number in the file starts with 1 while those in array starts with 0
 output_file_index = File.new("#{output_file}/index","w+")
@@ -408,7 +415,7 @@ while true
 	frequency = 0
 	output_file_variable= File.new("#{output_file}/#{count}","w+:ASCII-8BIT")
 	#dfa_record = [[[2587,0]],[],[]]  # record current state sequence of the DFA
-	dfa_record = [[[0,0]],[],[]]  # record current state sequence of the DFA
+	dfa_record = [[[0,0]],[0,0],[]]  # record current state sequence of the DFA
 	dfa_trace = [[],[],[]]   # record every visited state for each DFA
 	ascii_trace = ""         # record the ascii trace that need to be written in the file
 	tempchar = 0
@@ -420,7 +427,7 @@ while true
 		#p tempchar
 		ascii_trace << tempchar.chr
 		get_next(trans_matrix,match_matrix,dfa_record,dfa_trace,rule_table,tsi_matrix,tempchar)
-		p dfa_record
+		#p dfa_record
 		dfa_record.each do |single_dfa|
 			frequency += single_dfa.length()
 		end

@@ -11,14 +11,14 @@
 
 
 selected_traces = []
-required_length = 500 
-total_number =	100 
+required_length = 100 
+total_number =	20
 repeated_times = 1 
 count_number = 0
 sequence_length = 0
 endl = '\n'
 output_directory = "../../output_link/sTrace/"
-trans_matrix_file = "../resource/bro217_trans_matrix"
+trans_matrix_file = "../resource/5_12"
 otrace_file = "../../output_link/oTrace/current"
 timestamp = Time.new.strftime("%Y-%m-%d-%H-%M")
 
@@ -79,7 +79,7 @@ if File.exist?(otrace_file)
 				p "file corrupted"
 				exit
 			else
-				sequence_length = sequence_length.chop.to_i
+				sequence_length = sequence_length.chop!.to_i
 			end
 			if sequence_length >= required_length
 				count_number = count_number +1
@@ -102,23 +102,24 @@ selected_traces.each_with_index{|ele_array,index|
 }
 =end
 
-
+total_state = 0
 if File.exist?(trans_matrix_file)
 	trans_file= File.open(trans_matrix_file,'r+')
 	trans_matrix = []
-	while line = trans_file.gets
+	total_state = trans_file.gets.chop!.to_i
+	total_state.times{ 
+		line = trans_file.gets
 		trans_vector = line.split("\s")
 		trans_vector.map!{|state|
 			state.to_i
 		}
 	trans_matrix<<trans_vector
-	end
+	}
 	trans_file.close
 else
 	exit
 end
-trans_matrix.shift
-
+p trans_matrix.length
 
 string_per_line = ""
 count = 0
@@ -127,17 +128,17 @@ selected_traces.each{|state_array_ele|
 		output_file = File.open("#{output_directory}/#{state_array_ele.length}_#{count}_#{times_index}","w+:ASCII-8BIT")
 		count += 1
 		state_array_ele.each_with_index{|ele,index_ele|
-			if index_ele != state_array_ele.length-1
-				temp_vector = trans_matrix[ele]
-				temp_selector = []
-				temp_vector.each_with_index{|value,index|
-					if value ==	state_array_ele[index_ele+1] 
-						temp_selector<<index
-					end
-				}
-				selector = temp_selector[(rand()*temp_selector.length).floor]
-				string_per_line<<(selector.chr)
-			end
+				if index_ele != state_array_ele.length-1
+					temp_vector = trans_matrix[ele]
+					temp_selector = []
+					temp_vector.each_with_index{|value,index|
+						if value ==	state_array_ele[index_ele+1] 
+							temp_selector<<index
+						end
+					}
+					selector = temp_selector[(rand()*temp_selector.length).floor]
+					string_per_line<<(selector.chr)
+				end
 		}
 		output_file<<string_per_line
 		output_file.close()	

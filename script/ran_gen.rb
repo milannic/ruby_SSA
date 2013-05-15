@@ -1,7 +1,7 @@
-para = 623
-count_time = 500
+para = 800
+count_time = 10
 count_time.times{|index|
-	output = File.new("623_#{index}","w+:ASCII-8BIT")
+	output = File.new("#{para}_#{index}","w+:ASCII-8BIT")
 	string = ""
 	para.times{
 		string<<(rand()*255).floor.chr

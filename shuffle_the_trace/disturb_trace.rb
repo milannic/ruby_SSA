@@ -51,7 +51,7 @@ random_change = Proc.new{|string_original|
 }
 
 endl = '\n'
-repeated_times = 2000
+repeated_times = 100
 disturb_factor = 0.01
 
 mix_flag = 1
