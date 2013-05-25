@@ -115,7 +115,7 @@ int main(int argc,char** argv)
 		if(NULL != accepted_state[current_state]){
 			temp_link_node = accepted_state[current_state];
 			while(NULL != temp_link_node){
-				if(temp_link_node->accept_state==-1)printf("haha");
+				if(temp_link_node->accept_state==-1);
 				temp_link_node = temp_link_node->next;
 			}
 		}

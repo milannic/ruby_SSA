@@ -1,5 +1,5 @@
-para = 600
-count_time = 100
+para = 800
+count_time = 10
 count_time.times{|index|
 	output = File.new("#{para}_#{index}","w+:ASCII-8BIT")
 	string = ""

@@ -1,0 +1,146 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BH	trace_blank_v7.c	17;"	d	file:
+BH	trace_v7.c	17;"	d	file:
+BL	trace_blank_v7.c	16;"	d	file:
+BL	trace_v7.c	16;"	d	file:
+C	trace_blank_v7.c	24;"	d	file:
+C	trace_v7.c	24;"	d	file:
+CC	makefile	/^CC = \/usr\/bin\/gcc$/;"	m
+CFLAGS	makefile	/^CFLAGS = -g -O4 -I.. $/;"	m
+DFA	trace_blank_v7.c	/^static state_t **DFA[N] = {NULL}, END[N] = {G};$/;"	v	file:
+DFA	trace_v7.c	/^static state_t **DFA[N] = {NULL}, END[N] = {G};$/;"	v	file:
+DFA0_MATCH	trace_blank_v7.c	8;"	d	file:
+DFA0_MATCH	trace_v7.c	8;"	d	file:
+DFA0_TRANS	trace_blank_v7.c	7;"	d	file:
+DFA0_TRANS	trace_v7.c	7;"	d	file:
+DFA1_MATCH	trace_blank_v7.c	10;"	d	file:
+DFA1_MATCH	trace_v7.c	10;"	d	file:
+DFA1_TRANS	trace_blank_v7.c	9;"	d	file:
+DFA1_TRANS	trace_v7.c	9;"	d	file:
+DFA2_MATCH	trace_blank_v7.c	12;"	d	file:
+DFA2_MATCH	trace_v7.c	12;"	d	file:
+DFA2_TRANS	trace_blank_v7.c	11;"	d	file:
+DFA2_TRANS	trace_v7.c	11;"	d	file:
+END	trace_blank_v7.c	/^static state_t **DFA[N] = {NULL}, END[N] = {G};$/;"	v	file:
+END	trace_v7.c	/^static state_t **DFA[N] = {NULL}, END[N] = {G};$/;"	v	file:
+F	trace_blank_v7.c	22;"	d	file:
+F	trace_v7.c	22;"	d	file:
+G	trace_blank_v7.c	25;"	d	file:
+G	trace_v7.c	25;"	d	file:
+MRMT_TABLE	trace_blank_v7.c	13;"	d	file:
+MRMT_TABLE	trace_v7.c	13;"	d	file:
+MRT	trace_blank_v7.c	/^static regex_t **MRT = NULL;$/;"	v	file:
+MRT	trace_v7.c	/^static regex_t **MRT = NULL;$/;"	v	file:
+N	trace_blank_v7.c	23;"	d	file:
+N	trace_v7.c	23;"	d	file:
+POOL	trace_blank_v7.c	/^static input_t *POOL = NULL;$/;"	v	file:
+POOL	trace_v7.c	/^static input_t *POOL = NULL;$/;"	v	file:
+QUEUE_FAST	trace_blank_v7.c	20;"	d	file:
+QUEUE_FAST	trace_v7.c	20;"	d	file:
+QUEUE_SIZE	trace_blank_v7.c	19;"	d	file:
+QUEUE_SIZE	trace_v7.c	19;"	d	file:
+QUEUE_WARN	trace_blank_v7.c	/^static size_t QUEUE_WARN = QUEUE_FAST;$/;"	v	file:
+QUEUE_WARN	trace_v7.c	/^static size_t QUEUE_WARN = QUEUE_FAST;$/;"	v	file:
+TIE	trace_blank_v7.c	/^static match_unit_t **TIE[N] = {NULL};$/;"	v	file:
+TIE	trace_v7.c	/^static match_unit_t **TIE[N] = {NULL};$/;"	v	file:
+WQ	trace_blank_v7.c	18;"	d	file:
+WQ	trace_v7.c	18;"	d	file:
+__word_t	trace_blank_v7.c	15;"	d	file:
+__word_t	trace_v7.c	15;"	d	file:
+count_t	trace_blank_v7.c	/^typedef uint32_t count_t; \/\/ input character count: 0~4,294,967,295 (4G)$/;"	t	file:
+count_t	trace_v7.c	/^typedef uint32_t count_t; \/\/ input character count: 0~4,294,967,295 (4G)$/;"	t	file:
+datum_unit	trace_blank_v7.c	/^struct datum_unit {$/;"	s	file:
+datum_unit	trace_v7.c	/^struct datum_unit {$/;"	s	file:
+datum_unit::ni	trace_blank_v7.c	/^    count_t ni;$/;"	m	struct:datum_unit	file:	access:public
+datum_unit::ni	trace_v7.c	/^    count_t ni;$/;"	m	struct:datum_unit	file:	access:public
+datum_unit::np	trace_blank_v7.c	/^    regex_t np;$/;"	m	struct:datum_unit	file:	access:public
+datum_unit::np	trace_v7.c	/^    regex_t np;$/;"	m	struct:datum_unit	file:	access:public
+datum_unit::nr	trace_blank_v7.c	/^    regex_t nr;$/;"	m	struct:datum_unit	file:	access:public
+datum_unit::nr	trace_v7.c	/^    regex_t nr;$/;"	m	struct:datum_unit	file:	access:public
+datum_unit::ns	trace_blank_v7.c	/^    state_t ns[N];$/;"	m	struct:datum_unit	file:	access:public
+datum_unit::ns	trace_v7.c	/^    state_t ns[N];$/;"	m	struct:datum_unit	file:	access:public
+datum_unit::nt	trace_blank_v7.c	/^    table_t nt;$/;"	m	struct:datum_unit	file:	access:public
+datum_unit::nt	trace_v7.c	/^    table_t nt;$/;"	m	struct:datum_unit	file:	access:public
+datum_unit_t	trace_blank_v7.c	/^typedef struct datum_unit datum_unit_t;$/;"	t	typeref:struct:datum_unit	file:
+datum_unit_t	trace_v7.c	/^typedef struct datum_unit datum_unit_t;$/;"	t	typeref:struct:datum_unit	file:
+idxadd	trace_blank_v7.c	27;"	d	file:
+idxadd	trace_v7.c	27;"	d	file:
+idxcat	trace_blank_v7.c	32;"	d	file:
+idxcat	trace_v7.c	32;"	d	file:
+idxcmp	trace_blank_v7.c	28;"	d	file:
+idxcmp	trace_v7.c	28;"	d	file:
+idxcpy	trace_blank_v7.c	29;"	d	file:
+idxcpy	trace_v7.c	29;"	d	file:
+index	trace_blank_v7.c	/^    struct index_unit *index;$/;"	m	struct:state_unit	typeref:struct:state_unit::index_unit	file:	access:public
+index	trace_v7.c	/^    struct index_unit *index;$/;"	m	struct:state_unit	typeref:struct:state_unit::index_unit	file:	access:public
+index_unit	trace_blank_v7.c	/^struct index_unit {$/;"	s	file:
+index_unit	trace_v7.c	/^struct index_unit {$/;"	s	file:
+index_unit::word	trace_blank_v7.c	/^    __word_t word[WQ];$/;"	m	struct:index_unit	file:	access:public
+index_unit::word	trace_v7.c	/^    __word_t word[WQ];$/;"	m	struct:index_unit	file:	access:public
+index_unit_t	trace_blank_v7.c	/^typedef struct index_unit index_unit_t;$/;"	t	typeref:struct:index_unit	file:
+index_unit_t	trace_v7.c	/^typedef struct index_unit index_unit_t;$/;"	t	typeref:struct:index_unit	file:
+input_t	trace_blank_v7.c	/^typedef uint8_t  input_t; \/\/ input character range: 0~255$/;"	t	file:
+input_t	trace_v7.c	/^typedef uint8_t  input_t; \/\/ input character range: 0~255$/;"	t	file:
+label_t	trace_blank_v7.c	/^typedef uint8_t  label_t; \/\/ judgement variable: 0\/1$/;"	t	file:
+label_t	trace_v7.c	/^typedef uint8_t  label_t; \/\/ judgement variable: 0\/1$/;"	t	file:
+load_input_data	trace_blank_v7.c	/^static int load_input_data(datum_unit_t *du, char *data_from)$/;"	f	file:	signature:(datum_unit_t *du, char *data_from)
+load_input_data	trace_v7.c	/^static int load_input_data(datum_unit_t *du, char *data_from)$/;"	f	file:	signature:(datum_unit_t *du, char *data_from)
+load_regex_data	trace_blank_v7.c	/^static int load_regex_data(datum_unit_t *du)$/;"	f	file:	signature:(datum_unit_t *du)
+load_regex_data	trace_v7.c	/^static int load_regex_data(datum_unit_t *du)$/;"	f	file:	signature:(datum_unit_t *du)
+main	trace_blank_v7.c	/^int main(int argc, char **argv)$/;"	f	signature:(int argc, char **argv)
+main	trace_v7.c	/^int main(int argc, char **argv)$/;"	f	signature:(int argc, char **argv)
+match_unit	trace_blank_v7.c	/^struct match_unit {$/;"	s	file:
+match_unit	trace_v7.c	/^struct match_unit {$/;"	s	file:
+match_unit::next	trace_blank_v7.c	/^    struct match_unit *next;$/;"	m	struct:match_unit	typeref:struct:match_unit::match_unit	file:	access:public
+match_unit::next	trace_v7.c	/^    struct match_unit *next;$/;"	m	struct:match_unit	typeref:struct:match_unit::match_unit	file:	access:public
+match_unit::regex	trace_blank_v7.c	/^    regex_t regex;$/;"	m	struct:match_unit	file:	access:public
+match_unit::regex	trace_v7.c	/^    regex_t regex;$/;"	m	struct:match_unit	file:	access:public
+match_unit_t	trace_blank_v7.c	/^typedef struct match_unit match_unit_t;$/;"	t	typeref:struct:match_unit	file:
+match_unit_t	trace_v7.c	/^typedef struct match_unit match_unit_t;$/;"	t	typeref:struct:match_unit	file:
+next	trace_blank_v7.c	/^    struct match_unit *next;$/;"	m	struct:match_unit	typeref:struct:match_unit::match_unit	file:	access:public
+next	trace_blank_v7.c	/^    struct state_unit *next;$/;"	m	struct:state_unit	typeref:struct:state_unit::state_unit	file:	access:public
+next	trace_v7.c	/^    struct match_unit *next;$/;"	m	struct:match_unit	typeref:struct:match_unit::match_unit	file:	access:public
+next	trace_v7.c	/^    struct state_unit *next;$/;"	m	struct:state_unit	typeref:struct:state_unit::state_unit	file:	access:public
+ni	trace_blank_v7.c	/^    count_t ni;$/;"	m	struct:datum_unit	file:	access:public
+ni	trace_v7.c	/^    count_t ni;$/;"	m	struct:datum_unit	file:	access:public
+np	trace_blank_v7.c	/^    regex_t np;$/;"	m	struct:datum_unit	file:	access:public
+np	trace_v7.c	/^    regex_t np;$/;"	m	struct:datum_unit	file:	access:public
+nr	trace_blank_v7.c	/^    regex_t nr;$/;"	m	struct:datum_unit	file:	access:public
+nr	trace_v7.c	/^    regex_t nr;$/;"	m	struct:datum_unit	file:	access:public
+ns	trace_blank_v7.c	/^    state_t ns[N];$/;"	m	struct:datum_unit	file:	access:public
+ns	trace_v7.c	/^    state_t ns[N];$/;"	m	struct:datum_unit	file:	access:public
+nt	trace_blank_v7.c	/^    table_t nt;$/;"	m	struct:datum_unit	file:	access:public
+nt	trace_v7.c	/^    table_t nt;$/;"	m	struct:datum_unit	file:	access:public
+process	trace_blank_v7.c	/^static int process(datum_unit_t *du)$/;"	f	file:	signature:(datum_unit_t *du)
+process	trace_v7.c	/^static int process(datum_unit_t *du)$/;"	f	file:	signature:(datum_unit_t *du)
+regex	trace_blank_v7.c	/^    regex_t regex;$/;"	m	struct:match_unit	file:	access:public
+regex	trace_v7.c	/^    regex_t regex;$/;"	m	struct:match_unit	file:	access:public
+regex_t	trace_blank_v7.c	/^typedef uint16_t regex_t; \/\/ ruleset scale: 1~65536$/;"	t	file:
+regex_t	trace_v7.c	/^typedef uint16_t regex_t; \/\/ ruleset scale: 1~65536$/;"	t	file:
+state	trace_blank_v7.c	/^    state_t state;$/;"	m	struct:state_unit	file:	access:public
+state	trace_v7.c	/^    state_t state;$/;"	m	struct:state_unit	file:	access:public
+state_t	trace_blank_v7.c	/^typedef uint32_t state_t; \/\/ state identifier: 0~4,294,967,294 (4G)$/;"	t	file:
+state_t	trace_v7.c	/^typedef uint32_t state_t; \/\/ state identifier: 0~4,294,967,294 (4G)$/;"	t	file:
+state_unit	trace_blank_v7.c	/^struct state_unit {$/;"	s	file:
+state_unit	trace_v7.c	/^struct state_unit {$/;"	s	file:
+state_unit::index	trace_blank_v7.c	/^    struct index_unit *index;$/;"	m	struct:state_unit	typeref:struct:state_unit::index_unit	file:	access:public
+state_unit::index	trace_v7.c	/^    struct index_unit *index;$/;"	m	struct:state_unit	typeref:struct:state_unit::index_unit	file:	access:public
+state_unit::next	trace_blank_v7.c	/^    struct state_unit *next;$/;"	m	struct:state_unit	typeref:struct:state_unit::state_unit	file:	access:public
+state_unit::next	trace_v7.c	/^    struct state_unit *next;$/;"	m	struct:state_unit	typeref:struct:state_unit::state_unit	file:	access:public
+state_unit::state	trace_blank_v7.c	/^    state_t state;$/;"	m	struct:state_unit	file:	access:public
+state_unit::state	trace_v7.c	/^    state_t state;$/;"	m	struct:state_unit	file:	access:public
+state_unit::table	trace_blank_v7.c	/^    table_t table;$/;"	m	struct:state_unit	file:	access:public
+state_unit::table	trace_v7.c	/^    table_t table;$/;"	m	struct:state_unit	file:	access:public
+state_unit_t	trace_blank_v7.c	/^typedef struct state_unit state_unit_t;$/;"	t	typeref:struct:state_unit	file:
+state_unit_t	trace_v7.c	/^typedef struct state_unit state_unit_t;$/;"	t	typeref:struct:state_unit	file:
+table	trace_blank_v7.c	/^    table_t table;$/;"	m	struct:state_unit	file:	access:public
+table	trace_v7.c	/^    table_t table;$/;"	m	struct:state_unit	file:	access:public
+table_t	trace_blank_v7.c	/^typedef uint8_t  table_t; \/\/ dfa number: 0~3$/;"	t	file:
+table_t	trace_v7.c	/^typedef uint8_t  table_t; \/\/ dfa number: 0~3$/;"	t	file:
+word	trace_blank_v7.c	/^    __word_t word[WQ];$/;"	m	struct:index_unit	file:	access:public
+word	trace_v7.c	/^    __word_t word[WQ];$/;"	m	struct:index_unit	file:	access:public

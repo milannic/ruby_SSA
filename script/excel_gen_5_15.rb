@@ -66,7 +66,7 @@ dirp.each do |file|
 			statistic_file = File.new("#{output_file}_#{timestamp}",'w+')
 			statistic_file<<"#{file}\n"
 			count += 1
-			worksheet1.write(count,0,"#{file}")
+			worksheet0.write(count,0,"#{file}")
 			count += 1
 			dirp_2 = Dir.open("#{expand_path}/#{file}/result")	
 			dirp_2.each do |inner_file|
@@ -115,7 +115,7 @@ dirp.each do |file|
 				temp_value_lld_miss= line.chop!.split(":")[2].to_i-base_value_lld_miss
 
 				if count_input == 0
-					p temp_value
+					#p temp_value
 				end
 
 				per_array_100_d_ref << temp_value_d_ref

@@ -36,7 +36,7 @@ do
 			if [ "$i" != "run_dfa.sh" ];then
 				if [ "$i" != "result" ];then
 					echo $(pwd)
-					valgrind --log-file="$(pwd)/result/$i" --tool=cachegrind ../../../../ruby_SSA/c_bin/dfa_nas ../../../../ruby_SSA/resource/5_12 $i 
+					valgrind --log-file="$(pwd)/result/$i" --tool=cachegrind ../../../../ruby_SSA/BFA_bat/trace $i
 				fi
 			fi	
 			echo "$subcount/$subtotal"
