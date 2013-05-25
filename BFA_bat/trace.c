@@ -4,13 +4,13 @@
 #include <stdint.h>
 #include <sys/time.h>
 
-#define DFA0_TRANS "./result/DFA1_TRANS.data"
-#define DFA0_MATCH "./result/DFA1_MATCH.data"
-#define DFA1_TRANS "./result/DFA2_TRANS.data"
-#define DFA1_MATCH "./result/DFA2_MATCH.data"
-#define DFA2_TRANS "./result/DFA3_TRANS.data"
-#define DFA2_MATCH "./result/DFA3_MATCH.data"
-#define MRMT_TABLE "./result/TSI.data"
+#define DFA0_TRANS "../../../../ruby_SSA/BFA_bat/result/DFA1_TRANS.data"
+#define DFA0_MATCH "../../../../ruby_SSA/BFA_bat/result/DFA1_MATCH.data"
+#define DFA1_TRANS "../../../../ruby_SSA/BFA_bat/result/DFA2_TRANS.data"
+#define DFA1_MATCH "../../../../ruby_SSA/BFA_bat/result/DFA2_MATCH.data"
+#define DFA2_TRANS "../../../../ruby_SSA/BFA_bat/result/DFA3_TRANS.data"
+#define DFA2_MATCH "../../../../ruby_SSA/BFA_bat/result/DFA3_MATCH.data"
+#define MRMT_TABLE "../../../../ruby_SSA/BFA_bat/result/TSI.data"
 
 #define __word_t uint32_t
 #define BL 0x1F
@@ -71,14 +71,14 @@ struct datum_unit {
 };
 typedef struct datum_unit datum_unit_t;
 
-static state_t **DFA[N] = {NULL}, END[N] = {G};
-static match_unit_t **TIE[N] = {NULL};
-static regex_t **MRT = NULL;
-static input_t *POOL = NULL;
+state_t **DFA[N] = {NULL}, END[N] = {G};
+match_unit_t **TIE[N] = {NULL};
+regex_t **MRT = NULL;
+input_t *POOL = NULL;
 
-static size_t QUEUE_WARN = QUEUE_FAST;
+size_t QUEUE_WARN = QUEUE_FAST;
 
-static int load_regex_data(datum_unit_t *du)
+int load_regex_data(datum_unit_t *du)
 {
     FILE *fp = NULL, *fq = NULL;
     match_unit_t *mu = NULL;
@@ -215,58 +215,21 @@ err:
     return rv;
 }
 
-static int load_input_data(datum_unit_t *du, char *data_from)
+int process(datum_unit_t *du,char *data_from)
 {
-    FILE *fp = NULL;
-    count_t n;
-    int rv;
-    //printf("DEBUG: %s() start\n", __FUNCTION__);
-    if (data_from == NULL || strlen(data_from) == 0) {
-        rv = -21;
-        goto err;
-    }
-    fp = fopen(data_from, "r");
-    if (fp == NULL) {
-        rv = -22;
-        goto err;
-    }
-    rewind(fp);
-    fseek(fp, 0, SEEK_END);
-    du->ni = ftell(fp);
-    if (du->ni == 0) {
-        rv = -23;
-        goto err;
-    }
-    rewind(fp);
-    POOL = (input_t *)malloc(du->ni*sizeof(input_t));
-    if (POOL == NULL) {
-        rv = -24;
-        goto err;
-    }
-    memset(POOL, 0, du->ni*sizeof(input_t));
-    n = fread(POOL, 1, du->ni, fp);
-    if (n != du->ni) {
-        rv = -25;
-        goto err;
-    }
-    fclose(fp);
-    //printf("DEBUG: %s() end\n", __FUNCTION__);
-    return 0;
-
-err:
-    //printf("ERROR: %s() return %d\n", __FUNCTION__, rv);
-    return rv;
-}
-
-static int process(datum_unit_t *du)
-{
+	FILE *fp=NULL;
+	fp = fopen(data_from,"r+");	
+	rewind(fp);
+	fseek(fp,0,SEEK_END);
+	du->ni = ftell(fp);
+	rewind(fp);
     struct  timeval start, end;
     state_unit_t *sf = NULL, *work_queue = NULL, *rest_queue = NULL,
                  *sw = NULL, *sr = NULL, *su = NULL, *sv = NULL;
     match_unit_t *mu = NULL;
     index_unit_t *iu = NULL, *idx_to_exec[du->nt+1];
     double  hz, us, pe;
-    //count_t n = 0, rn = 0, zn = 0, ni = du->ni, stat[du->nr+1];
+    //count_t n = 0, rn = 0, zn = 0, ni = du->ni, stat[du->nr+1];	
     count_t n = 0, rn = 0, zn = 0, ni = du->ni;
     state_t s = 0;
     regex_t r = 0, id = 0;
@@ -274,7 +237,8 @@ static int process(datum_unit_t *du)
     input_t c = 0;
     label_t x = 0, keep[du->np+1], exec[du->nt+1];
     size_t  q = 0, q_size = 0;
-    int rv;
+    int rv;//milannic_count;
+//	int dead_stat, merge_stat, seg_stat;
 
     //printf("DEBUG: %s() init\n", __FUNCTION__);
     iu = (index_unit_t *)malloc((du->nt+1)*sizeof(index_unit_t));
@@ -329,11 +293,14 @@ static int process(datum_unit_t *du)
     sr = rest_queue;
     su = sw;
     sv = sr;
-
+	//milannic_count = 0;
     //printf("DEBUG: %s() start\n", __FUNCTION__);
     //gettimeofday(&start, NULL);
-    for (;;) {
-        c = POOL[n++];
+    while(!feof(fp)) {
+        c = (input_t)fgetc(fp);
+		//if(feof(fp)) printf("hahahhahahahahaha");
+		//printf("%d\n",milannic_count);
+		//milannic_count++;
         do {
             sw->state = DFA[sw->table][sw->state][c];
             if (TIE[sw->table][sw->state] == NULL) {
@@ -341,12 +308,15 @@ static int process(datum_unit_t *du)
                     su = sw;
                     sw = sw->next;
                 } else {
+					//printf("%d", n);
+					//dead_stat++;
                     if (sw == su->next) {
                         su->next = sw->next;
                     } else if (sw->next != NULL) {
                         work_queue = sw->next;
                         su = sw->next;
                     } else {
+						printf("haha");
                         goto out;
                     }
                     sr = sw;
@@ -358,6 +328,7 @@ static int process(datum_unit_t *du)
             } else {
                 mu = TIE[sw->table][sw->state];
                 do {
+					//seg_stat++;
                     id = mu->regex - 1;
                     if (keep[id] && (MRT[id][0] == 0 || idxcmp(MRT[id][0], sw->index))) {
                         if (MRT[id][1] == 0) {
@@ -395,6 +366,7 @@ static int process(datum_unit_t *du)
                         sr = sr->next;
                         if (++q_size >= QUEUE_SIZE) {
                             rv = -34;
+							//printf("hahaha");
                             goto err;
                         }
                     }
@@ -419,6 +391,7 @@ static int process(datum_unit_t *du)
             if (!x) {
                 sw = work_queue;
             } else {
+				//merge_stat++;
                 x = 0;
                 for (sw=work_queue; sw!=NULL;) {
                     for (su=sw->next, sv=sw; su!=NULL;) {
@@ -444,10 +417,12 @@ static int process(datum_unit_t *du)
         } else {
             break;
         }
+		//printf("hahahahahhaha");	
     }
 out:
-   // gettimeofday(&end, NULL);
-    //printf("DEBUG: %s() end\n", __FUNCTION__);
+ //printf("DEBUG: %s() end %d, %d, %d\n", __FUNCTION__, seg_stat, dead_stat, merge_stat);
+ //gettimeofday(&end, NULL);
+ //printf("DEBUG: %s() end\n", __FUNCTION__);
 /*  
     for (r=0; r<=du->nr; r++) {
         if (stat[r] > 0) {
@@ -467,6 +442,7 @@ out:
     printf(">> # of matched rules: %u\n", rn);
     printf(">> # of matched times: %u\n", zn);
 */
+/* 
     if (sf != NULL) {
         free(sf);
     }
@@ -491,7 +467,9 @@ out:
             free(DFA[t]);
         }
     }
+*/
     return 0;
+
 
 err:
     printf("ERROR: %s() return %d\n", __FUNCTION__, rv);
@@ -500,6 +478,7 @@ err:
 
 int main(int argc, char **argv)
 {
+	//printf("hahfwe\n");
     datum_unit_t datum;
     memset(&datum, 0, sizeof(datum_unit_t));
     int rv;
@@ -507,20 +486,13 @@ int main(int argc, char **argv)
     if (rv < 0) {
         goto err;
     }
-    //rv = load_input_data(&datum, argv[1]);
-    //if (rv < 0) {
-    //    goto err;
-    //}
-    //if (DFA == NULL || END == NULL || TIE == NULL || MRT == NULL
-    //       || POOL == NULL || datum.nt == 0 || datum.ns[0] == 0
-    //        || datum.nr == 0 || datum.np == 0 || datum.ni == 0) {
-    //    printf("ERROR: load data failed\n");
-    //    goto err;
-    //}
-    //rv = process(&datum);
-    //if (rv < 0) {
-    //    goto err;
-    //}
+	//printf("hahah\n");
+	//
+    rv = process(&datum,argv[1]);
+	//printf("im hee\n");
+    if (rv < 0) {
+        goto err;
+    }
     return 0;
 
 err:

@@ -1,5 +1,5 @@
 CC = /usr/bin/gcc
-CFLAGS = -g  -I.. 
+CFLAGS = -g -O4 -I.. 
 
 all:	main blank exe
 
